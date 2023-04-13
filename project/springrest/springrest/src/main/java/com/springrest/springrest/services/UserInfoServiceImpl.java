@@ -21,21 +21,6 @@ public class UserInfoServiceImpl implements UserInfoService{
 	@Autowired
 	private UserInfoDao userInfoDao;
 	
-	
-//	List<Userprofile> list;
-	
-	public UserInfoServiceImpl() {
-		
-//		list= new ArrayList<>();
-//		list.add(new Userprofile(001,"Hemant","17011998","engineering","Single",8789072,"hemant5@gmail.com"));
-//		list.add(new Userprofile(002,"shubhankar","08112000","b.com","Single",843432,"shubhankar12@gmail.com"));
-
-		
-	
-	
-	}
-	
-	
 	@Override
 	public List<Userprofile> getUserInfo() {
 	
@@ -47,18 +32,6 @@ public class UserInfoServiceImpl implements UserInfoService{
 	@SuppressWarnings("deprecation")
 	@Override
 	public Userprofile getUserprofile(Long UserId) {
-		
-//		Userprofile c= null;
-//		for(Userprofile User: list)
-//		{
-//			if(User.getUserRoleId()==UserId)
-//			{
-//				
-//				c= User;
-//				break;
-//			}
-//			
-//		}
 		
 		return userInfoDao.getOne(UserId) ;
 		
@@ -76,11 +49,13 @@ public class UserInfoServiceImpl implements UserInfoService{
 					throw new KeyAlreadyExistsException("duplicate email");
 				}
 			});
-			System.out.println(profile.getmartialStatus());
+			System.out.println(profile.getRole());
+			profile.getRole().setUserprofile(profile);
+			
 			
 			userInfoDao.save(profile);
 		} catch (KeyAlreadyExistsException e) {
-			// TODO: handle exception
+			
 			throw new KeyAlreadyExistsException(e.getMessage());
 		}
 		return profile;
@@ -88,15 +63,6 @@ public class UserInfoServiceImpl implements UserInfoService{
 	
 	@Override
 	public Userprofile updateUserprofile(Userprofile profile) {
-		
-//		list.forEach(e -> {
-//			
-//			if(e.getUserRoleId() == profile.getUserRoleId()) {
-//				e.setName(profile.getName());
-//				e.setEducation(profile.getEducation());
-//			}
-//		});
-		
 		
 		userInfoDao.save(profile);
 		return profile;
@@ -106,9 +72,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 	
 	@Override
 	public void deleteUserprofile(Long UserId) {
-		
-//	list= this.list.stream().filter(e->e.getUserRoleId()!=parseInteger).collect(Collectors.toList());
-	
+			
 	Userprofile entity	=userInfoDao.getOne(UserId);
 		userInfoDao.delete(entity);
 		
@@ -117,20 +81,10 @@ public class UserInfoServiceImpl implements UserInfoService{
 
 	@Override
 	public Optional<Userprofile> getUserprofile(long UserId) {
-		// TODO Auto-generated method stub
+		
 		return userInfoDao.findById(UserId);
 	}
 
-
-//	@Override
-//	public void deleteUserprofile(Integer parseInteger) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-	
-	
-	
-	
-	
+		
 
 }
