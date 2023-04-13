@@ -20,22 +20,22 @@ import com.springrest.springrest.services.UserInfoService;
 
 import jakarta.validation.Valid;
 
-@RestController			//---> annotation which handles http request.
+@RestController			
 public class Mycontroller {
 	
 	
-	@Autowired	//injects an instance of UserInfoService into the controller
+	@Autowired	
 	
 	private UserInfoService profile;
 	
 	
-	//created the Api  just for testing purpose
-	
-	@GetMapping("/home")
-	public String home() {
-		return "Welcome to User Profile Applications";
-		
-	}
+//	created the Api  just for testing purpose
+//	
+//	@GetMapping("/home")
+//	public String home() {
+//		return "Welcome to User Profile Applications";
+//		
+//	}
 	
 	//get the user profile information
 	
@@ -48,8 +48,6 @@ public class Mycontroller {
 		
 		
 	}
-	
-	
 	
 	//single profile get
 	
