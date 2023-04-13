@@ -26,8 +26,8 @@ import jakarta.validation.constraints.Size;
 @Entity
 public class Userprofile {
 	
-	@Id	//indicate that UserRoleId is the primary key for the entity
-	@GeneratedValue(strategy = GenerationType.IDENTITY)//used to specify that the primary key value should be generated automatically.
+	@Id	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long UserRoleId;
 	
 	@NotEmpty
@@ -41,7 +41,7 @@ public class Userprofile {
 	private String Education;
 	
 //	@NotEmpty(message = "Marital status should not be empty!!")
-	@NotBlank(message = "sadhi hua nahi kya")
+	@NotBlank(message = "Should not be empty")
 	private String martialStatus;
 	
 	@NotNull
@@ -53,13 +53,15 @@ public class Userprofile {
 	@Column(unique = true)
 	private String emailId;
 	
-	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "userinfo_role_id")
-	private Role role;
 	
-	public Userprofile(long userRoleId, String name, String dOB, String education, String martialStatus,
-			long phoneNumber, String emailId) {
+	@OneToOne(mappedBy = "userprofile", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Role role;
+
+	public Userprofile(long userRoleId, @NotEmpty @Size(min = 4, message = "INVALID INPUT!!") String name,
+			@NotEmpty(message = "FORMAT ERROR!!") String dOB,
+			@NotEmpty(message = "It should not be empty!!") String education,
+			@NotBlank(message = "Should not be empty") String martialStatus, @NotNull long phoneNumber,
+			@Email(message = "FORMAT ERROR!!") @NotEmpty(message = "should not be empty") String emailId, Role role) {
 		super();
 		this.UserRoleId = userRoleId;
 		this.Name = name;
@@ -68,11 +70,14 @@ public class Userprofile {
 		this.martialStatus = martialStatus;
 		this.phoneNumber = phoneNumber;
 		this.emailId = emailId;
+		this.role = role;
 	}
 
-	public Userprofile() {
-		super();
-		// TODO Auto-generated constructor stub
+	@Override
+	public String toString() {
+		return "Userprofile [UserRoleId=" + UserRoleId + ", Name=" + Name + ", DOB=" + DOB + ", Education=" + Education
+				+ ", martialStatus=" + martialStatus + ", phoneNumber=" + phoneNumber + ", emailId=" + emailId
+				+ ", role=" + role + "]";
 	}
 
 	public long getUserRoleId() {
@@ -107,11 +112,11 @@ public class Userprofile {
 		Education = education;
 	}
 
-	public String getmartialStatus() {
+	public String getMartialStatus() {
 		return martialStatus;
 	}
 
-	public void setmartialStatus(String martialStatus) {
+	public void setMartialStatus(String martialStatus) {
 		this.martialStatus = martialStatus;
 	}
 
@@ -131,10 +136,17 @@ public class Userprofile {
 		this.emailId = emailId;
 	}
 
-	@Override
-	public String toString() {
-		return "Userprofile [UserRoleId=" + UserRoleId + ", Name=" + Name + ", DOB=" + DOB + ", Education=" + Education
-				+ ", martialStatus=" + martialStatus + ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + "]";
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public Userprofile() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 	
