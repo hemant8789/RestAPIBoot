@@ -1,6 +1,9 @@
 package com.springrest.springrest.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,10 +18,15 @@ public class Role {
 	
 	private String rolename;
 
-	public Role(Long id, String rolename) {
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.EAGER) 
+	private Userprofile userprofile;
+
+	public Role(Long id, String rolename, Userprofile userprofile) {
 		super();
 		this.id = id;
 		this.rolename = rolename;
+		this.userprofile = userprofile;
 	}
 
 	public Role() {
@@ -42,12 +50,21 @@ public class Role {
 		this.rolename = rolename;
 	}
 
+	public Userprofile getUserprofile() {
+		return userprofile;
+	}
+
+	public void setUserprofile(Userprofile userprofile) {
+		this.userprofile = userprofile;
+	}
+
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", rolename=" + rolename + "]";
+		return "Role [id=" + id + ", rolename=" + rolename + ", userprofile=" + userprofile + "]";
 	}
 	
-	@OneToOne(mappedBy = "role")
-	private Userprofile userprofile;
+	
+	
+	
 
 }
