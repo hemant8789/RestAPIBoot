@@ -17,16 +17,14 @@ public class Role {
 	private Long id;
 	
 	private String rolename;
+	
+	
 
-	@JsonIgnore
-	@OneToOne(fetch = FetchType.EAGER) 
-	private Userprofile userprofile;
-
-	public Role(Long id, String rolename, Userprofile userprofile) {
+	public Role(Long id, String rolename) {
 		super();
 		this.id = id;
 		this.rolename = rolename;
-		this.userprofile = userprofile;
+		
 	}
 
 	public Role() {
@@ -50,21 +48,17 @@ public class Role {
 		this.rolename = rolename;
 	}
 
-	public Userprofile getUserprofile() {
-		return userprofile;
-	}
-
-	public void setUserprofile(Userprofile userprofile) {
-		this.userprofile = userprofile;
-	}
-
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", rolename=" + rolename + ", userprofile=" + userprofile + "]";
+		return "Role [id=" + id + ", rolename=" + rolename + "]";
 	}
-	
-	
-	
+
 	
 
+
+	
+
+	
+	
+	
 }
