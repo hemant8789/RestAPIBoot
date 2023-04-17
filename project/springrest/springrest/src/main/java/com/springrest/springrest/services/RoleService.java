@@ -4,14 +4,11 @@ import java.util.List;
 
 import com.springrest.springrest.entites.Role;
 
-import jakarta.validation.Valid;
-
 public interface RoleService {
-
 	
 	public Role getRoleById(Long id);
 	
-	public Role addRole(Role role);
+	public String addRole(Role role);
 	
 	public Role updateRole(Long id, Role role);
 	
@@ -19,5 +16,3 @@ public interface RoleService {
 	
 	public List<Role> getAllRoles();
 }
-	
-
