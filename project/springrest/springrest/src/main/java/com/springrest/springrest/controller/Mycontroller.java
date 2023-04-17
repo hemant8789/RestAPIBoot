@@ -1,6 +1,7 @@
 package com.springrest.springrest.controller;
 
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,27 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springrest.springrest.entites.Userprofile;
 import com.springrest.springrest.services.UserInfoService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController			
-public class Mycontroller {
+public class UserManagementController {
 	
 	
 	@Autowired	
 	
 	private UserInfoService profile;
-	
-	
-//	created the Api  just for testing purpose
-//	
-//	@GetMapping("/home")
-//	public String home() {
-//		return "Welcome to User Profile Applications";
-//		
-//	}
-	
-	//get the user profile information
-	
 	
 	@GetMapping("/UserInfo")
 	
@@ -46,22 +36,18 @@ public class Mycontroller {
 		
 		return this.profile.getUserInfo();
 		
-		
 	}
 	
-	//single profile get
-	
+		
 	@GetMapping("/UserInfo/{UserId}")
 	public Optional<Userprofile> getUserprofile(@PathVariable String UserId )
 	{
 		return this.profile.getUserprofile(Long.parseLong(UserId));
 	}
 	
-	
-	//User profile add
-	
+		
 	@PostMapping("/UserInfo")
-	public Userprofile addUserprofile(@RequestBody Userprofile profile)
+	public Userprofile addUserprofile(@Valid @RequestBody Userprofile profile)
 	{
 		System.out.println(profile);
 		
@@ -69,19 +55,16 @@ public class Mycontroller {
 		
 		
 	}
-	
-	//update profile using PUT method
-	
-	@PutMapping("/UserInfo/{UserId}")
-	public Userprofile updateUserprofile(@Valid @RequestBody Userprofile profile)
-	{
 		
-		return this.profile.updateUserprofile(profile);
+	@PutMapping("/UserInfo/{UserId}")
+	public Userprofile updateUserprofile(@PathVariable("UserId") long userId, @Valid @RequestBody Userprofile profile) throws EntityNotFoundException
+	{
+		System.out.println(userId);
+		
+		
+		return this.profile.updateUserprofile(userId, profile);
 	}
-	
-	
-	//delete the User Profile
-	
+		
 	@DeleteMapping("/UserInfo/{UserId}")
 	public ResponseEntity<HttpStatus> deleteUserprofile(@PathVariable String UserId  ){
 		
