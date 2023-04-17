@@ -9,8 +9,8 @@ import com.springrest.springrest.dao.RoleRepository;
 import com.springrest.springrest.entites.Role;
 
 @Service
-public class RoleServiceImpl  implements RoleService{
-
+public class RoleServiceImpl implements RoleService{
+	
 	@Autowired
 	private RoleRepository roleRepository;
 	
@@ -19,13 +19,6 @@ public class RoleServiceImpl  implements RoleService{
 	public Role getRoleById(Long id) {
 		
 		return roleRepository.findById(id).orElse(null);
-		
-	}
-	
-	@Override
-	public Role addRole(Role role) {
-		
-		return roleRepository.save(role);
 	}
 	
 	@Override
@@ -42,19 +35,23 @@ public class RoleServiceImpl  implements RoleService{
 	@Override
 	public void deleteRole(Long id) {
 		
-		Role entity= roleRepository.findById(id).orElse(null);
+		Role entity = roleRepository.findById(id).orElse(null);
 		if(entity != null) {
 			roleRepository.delete(entity);
 		}
 		roleRepository.delete(entity);
-	}
+		}
 	
 	@Override
 	public List<Role> getAllRoles(){
 		return roleRepository.findAll();
-		
 	}
 
-	
-	
+	@Override
+	public String addRole(Role role) {
+		// TODO Auto-generated method stub
+		System.out.println("from service ->" + role);
+		this.roleRepository.save(role);
+		return "Role Successfully Added";
+	}
 }
