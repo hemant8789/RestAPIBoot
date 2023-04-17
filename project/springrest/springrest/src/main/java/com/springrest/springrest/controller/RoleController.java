@@ -2,6 +2,7 @@ package com.springrest.springrest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +16,10 @@ import com.springrest.springrest.services.RoleService;
 import jakarta.validation.Valid;
 
 @RestController
-public class RoleController {
+public class RoleManagementController {
 	
 	@Autowired
-	private  RoleService roleService;
+	private RoleService roleService;
 	
 	@GetMapping("/role/{id}")
 	public Role getRoleById(@PathVariable Long id) {
@@ -26,20 +27,20 @@ public class RoleController {
 	}
 	
 	@PostMapping("/role")
-	public Role addRole(@Valid @RequestBody Role role) {
+	public String addRole(@Valid @RequestBody Role role) {
 		System.out.println(role);
 		
 		return this.roleService.addRole(role);
 		}
 	
-	@PutMapping("role/{role_id}")
+	@PutMapping("/role/{role_id}")
 	
-	public ResponseEntity<Role>updateRole(@PathVariable Long role_id,@Valid @RequestBody Role role){
+	public ResponseEntity<Role> updateRole(@PathVariable Long role_id, @Valid @RequestBody Role role){
 		return ResponseEntity.ok(this.roleService.updateRole(role_id, role));
-	
-	
-	
 	}
+	
+	
+	
 	
 	
 }
